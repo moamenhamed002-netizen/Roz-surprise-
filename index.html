@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>هدية خاصة</title>
+    <style>
+        body {
+            font-family: 'Cairo', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #fdf6f6;
+            color: #333;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #lock-screen {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        input[type="password"] {
+            width: 80%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ffb6c1;
+            border-radius: 25px;
+            font-size: 16px;
+            text-align: center;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff6b81;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 16px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff4757;
+        }
+
+        #error-msg {
+            color: #ff4757;
+            margin-top: 15px;
+            font-weight: bold;
+            display: none;
+        }
+
+        #main-content {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .image-frame {
+            max-width: 500px;
+            width: 90%;
+            margin: 20px auto;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .image-frame img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .title-text {
+            font-size: 24px;
+            color: #ff4757;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        #audio-control {
+            margin-top: 20px;
+            background: #fff0f3;
+            padding: 15px;
+            border-radius: 10px;
+            display: inline-block;
+        }
+
+        #counter {
+            font-size: 22px;
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            display: inline-block;
+            margin: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 1px solid #ffe4e8;
+        }
+
+        .number {
+            color: #ff4757;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="lock-screen">
+        <h2>عيد ميلاد كل حياتي🔒</h2>
+        <input type="password" id="password" placeholder="كلمة السر هنا">
+        <br>
+        <button onclick="checkPassword()">فتح القفل</button>
+        <div id="error-msg">كلمة السر غير صحيحة ياقلبي، حاولي مرة أخرى ❤️</div>
+    </div>
+
+    <div id="main-content">
+        <div class="title-text">أجمل يوم في حياتي لما بقينا سوا 🥰</div>
+
+        <div class="image-frame">
+            <img src="photo1.jpg" alt="الذكريات الأولى">
+        </div>
+        
+        <div class="image-frame">
+            <img src="photo2.jpg" alt="الذكريات الثانية">
+        </div>
+
+        <div id="counter">
+            ⏳ <span id="days" class="number">0</span> يوم <br>
+            <span id="hours" class="number">0</span> ساعة : <span id="minutes" class="number">0</span> دقيقة
+        </div>
+
+        <br>
+
+        <div id="audio-control">
+            <p>تشغيل الموسيقى 🎵</p>
+            <audio id="bg-music" controls loop>
+                <source src="your-song.mp3" type="audio/mpeg">
+                متصفحك لا يدعم تشغيل الصوت.
+            </audio>
+        </div>
+    </div>
+
+    <script>
+        // دالة التحقق من كلمة السر
+        function checkPassword() {
+            const pass = document.getElementById("password").value;
+            // كلمة السر مضبوطة على كلمة "247"
+            if (pass.toLowerCase() === "247") {
+                document.getElementById("lock-screen").style.display = "none";
+                document.getElementById("main-content").style.display = "block";
+                
+                // محاولة تشغيل الصوت تلقائياً عند الدخول
+                const music = document.getElementById("bg-music");
+                music.play().catch(error => {
+                    console.log("المتصفح يتطلب تفاعل لبدء الصوت");
+                });
+            } else {
+                document.getElementById("error-msg").style.display = "block";
+            }
+        }
+
+        // إعداد العداد الزمني (تاريخ البداية: 18 فبراير 2026)
+        // ملاحظة: الشهر يبدأ من 0 في البرمجة، لذلك فبراير = 1
+        const startDate = new Date(2026, 1, 18);
+
+        function updateCounter() {
+            const now = new Date();
+            const diff = now - startDate;
+
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("days").innerText = days;
+                document.getElementById("hours").innerText = hours;
+                document.getElementById("minutes").innerText = minutes;
+            }
+        }
+
+        // تحديث العداد كل دقيقة
+        setInterval(updateCounter, 60000);
+        updateCounter();
+    </script>
+</body>
+</html>
