@@ -1,0 +1,75 @@
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #fdf5f4; /* لون خلفية كريمي هادئ */
+    color: #5a4b4b;
+    text-align: center;
+}
+
+#login-screen {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #fdf5f4;
+}
+
+.envelope {
+    background: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+input[type="password"] {
+    padding: 10px;
+    margin: 15px 0;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    text-align: center;
+    outline: none;
+}
+
+button {
+    background-color: #d18888;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.music-player {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #fff;
+    padding: 10px 0;
+    box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+}
+
+.counter-section {
+    margin: 40px 20px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.gallery {
+    padding: 20px;
+    margin-bottom: 80px; /* لترك مساحة لمشغل الموسيقى */
+}
+
+.photo-card {
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.photo-card img {
+    width: 100%;
+    border-radius: 10px;
+}
