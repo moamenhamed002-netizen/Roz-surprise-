@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Love Page ❤️</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'love-bg': '#ffe6f0',
+                        'love-pink': '#ffb3c6',
+                        'love-red': '#ff3366',
+                    },
+                    fontFamily: {
+                        'cairo': ['Cairo', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; }
+
+        /* تأثير القلوب المتحركة في الخلفية */
+        .bg-hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0; left: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .heart {
+            position: absolute;
+            bottom: -10%;
+            color: rgba(255, 51, 102, 0.15);
+            font-size: 24px;
+            animation: floatUp 8s infinite linear;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-love-bg min-h-screen relative pb-12 selection:bg-pink-300">
+
+    <div class="bg-hearts" id="hearts-container"></div>
+
+    <div id="login-screen" class="min-h-screen flex flex-col items-center justify-center p-4 relative z-10">
+        <div class="bg-pink-100/90 border-2 border-love-pink p-8 rounded-3xl shadow-xl max-w-sm w-full text-center backdrop-blur-sm">
+
+            <div class="w-24 h-24 mx-auto mb-4 rounded-full border-4 border-love-red overflow-hidden shadow-md bg-white">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=300" alt="avatar" class="w-full h-full object-cover">
+            </div>
+
+            <h1 class="text-2xl font-bold text-gray-800 mb-1">جاهزة؟ 😉</h1>
+            <p class="text-love-red font-semibold mb-6">كل اللي بينا هنا ❤️</p>
+
+            <div class="space-y-4">
+                <input type="password" id="password-input" placeholder="عيدميلادك"
+                    class="w-full text-center py-3 px-4 rounded-full border-2 border-pink-300 focus:outline-none focus:border-love-red text-lg tracking-widest shadow-inner"
+                    onkeypress="if(event.key === 'Enter') checkPassword()">
+
+                <button onclick="checkPassword()"
+                    class="w-full bg-love-red hover:bg-rose-600 text-white font-bold py-3 px-6 rounded-full shadow-lg transition duration-300 flex items-center justify-center gap-2 text-lg">
+                    <span>Unlock</span> <i class="fas fa-lock-open text-sm"></i>
+                </button>
+            </div>
+
+            <p id="error-msg" class="text-red-500 text-sm mt-3 font-bold hidden">الباسورد غلط يا قمر، جربي تاني!</p>
+        </div>
+    </div>
+
+
+    <div id="main-content" class="max-w-md mx-auto p-4 relative z-10 hidden space-y-6 pt-6">
+
+        <div class="bg-white/80 backdrop-blur-md p-4 rounded-2xl shadow-md border border-pink-200 text-center">
+            <h3 class="font-bold text-gray-800 mb-2">تملي معاك♥️🫂 🎵</h3>
+            <audio id="love-music" src="your-song.mp3"></audio>
+
+            <div class="flex items-center justify-center gap-4 mt-2">
+                <button onclick="toggleAudio()" id="play-btn" class="bg-love-red text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:scale-105 transition">
+                    <i class="fas fa-play"></i>
+                </button>
+                <div class="flex-1 bg-pink-100 h-2 rounded-full overflow-hidden">
+                    <div id="music-progress" class="bg-love-red h-full w-0 transition-all duration-300"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white/80 backdrop-blur-md p-5 rounded-2xl shadow-md border border-pink-200 text-center">
+            <h2 class="text-sm font-bold text-love-red mb-3">💕 سوا من 18-02-2026 💕</h2>
+
+            <div class="grid grid-cols-4 gap-2 text-center my-2">
+                <div class="bg-pink-50 p-2 rounded-xl border border-pink-200">
+                    <span id="days" class="block text-xl font-black text-love-red">0</span>
+                    <span class="text-xs text-gray-500 font-bold">يوم</span>
+                </div>
+                <div class="bg-pink-50 p-2 rounded-xl border border-pink-200">
+                    <span id="hours" class="block text-xl font-black text-love-red">0</span>
+                    <span class="text-xs text-gray-500 font-bold">ساعة</span>
+                </div>
+                <div class="bg-pink-50 p-2 rounded-xl border border-pink-200">
+                    <span id="minutes" class="block text-xl font-black text-love-red">0</span>
+                    <span class="text-xs text-gray-500 font-bold">دقيقة</span>
+                </div>
+                <div class="bg-pink-50 p-2 rounded-xl border border-pink-200">
+                    <span id="seconds" class="block text-xl font-black text-love-red">0</span>
+                    <span class="text-xs text-gray-500 font-bold">ثانية</span>
+                </div>
+            </div>
+
+            <p class="text-xs text-gray-600 mt-2 font-semibold">كل ثانية بتعدي وأنتِ في قلبي ❤️</p>
+        </div>
+
+        <div class="space-y-3">
+            <div class="bg-white/80 backdrop-blur-md p-3 px-4 rounded-xl shadow-sm border border-pink-200 flex justify-between items-center">
+                <span class="font-bold text-gray-700 text-sm">❤️ يوم ما قولتك بحبك</span>
+                <span class="bg-pink-100 text-love-red px-3 py-1 rounded-lg text-xs font-bold">2026-02-27</span>
+            </div>
+            <div class="bg-white/80 backdrop-blur-md p-3 px-4 rounded-xl shadow-sm border border-pink-200 flex justify-between items-center">
+                <span class="font-bold text-gray-700 text-sm">☕ أول خروجة لينا سوا</span>
+                <span class="bg-pink-100 text-love-red px-3 py-1 rounded-lg text-xs font-bold">2026-04-03</span>
+            </div>
+        </div>
+
+        <div class="space-y-4">
+            <div class="bg-white p-3 rounded-2xl shadow-md border border-pink-200">
+                <div class="rounded-xl overflow-hidden mb-2 max-h-80 flex items-center justify-center bg-pink-50">
+                    <img src="photo1.jpg" alt="memory" class="w-full object-cover">
+                </div>
+                <p class="text-center font-bold text-gray-700 text-sm py-1">ربنا يخليكي ليا 😍</p>
+            </div>
+
+            <div class="bg-white p-3 rounded-2xl shadow-md border border-pink-200">
+                <div class="rounded-xl overflow-hidden mb-2 max-h-80 flex items-center justify-center bg-pink-50">
+                    <img src="photo2.jpg" alt="memory" class="w-full object-cover">
+                </div>
+                <p class="text-center font-bold text-gray-700 text-sm py-1">بحبك كل يوم بيزيد ❤️</p>
+            </div>
+        </div>
+
+        <div class="text-center py-4 space-y-2">
+            <p class="text-love-red font-bold animate-bounce">دوسي هنا 👇</p>
+            <button onclick="showHiddenMessage()" class="animate-pulse bg-gradient-to-r from-pink-500 to-rose-500 text-white font-black py-4 px-8 rounded-full shadow-lg border-2 border-white hover:scale-105 transition duration-300">
+                <i class="fas fa-envelope-open-text ml-2"></i> رسالة من القلب ❤️
+            </button>
+        </div>
+
+        <div class="bg-pink-100 border-2 border-pink-300 p-5 rounded-2xl text-center space-y-2 shadow-sm">
+            <p class="text-sm font-bold text-gray-800 leading-relaxed">
+                مهما هقولك بحبك ازاي مش هوفيكي بحقك.. معاكِ الدنيا أحلى كتير ❤️
+            </p>
+            <span class="block text-xs text-love-red font-black">بحبك أوي</span>
+        </div>
+
+    </div>
+
+    <script>
+        // دالة الرسالة المخفية
+        function showHiddenMessage() {
+            Swal.fire({
+                title: 'رسالة خاصة ليكي ❤️',
+                html: '<p style="font-family: Cairo;">في كل يوم بيعدي، بتأكد إن وجودك في حياتي هو أجمل حاجة حصلتلي. أنتي كل دنيتي ❤️</p>',
+                confirmButtonText: 'بحبك أكتر ❤️',
+                confirmButtonColor: '#ff3366',
+                background: '#ffe6f0'
+            });
+        }
+
+        // 1. توليد القلوب في الخلفية
+        const heartsContainer = document.getElementById('hearts-container');
+        for(let i=0; i<18; i++) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 6 + 4) + 's';
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            heartsContainer.appendChild(heart);
+        }
+
+        // 2. فحص الباسورد
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('error-msg');
+
+            if(input.trim().toLowerCase() === '247') {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').classList.remove('hidden');
+
+                startLoveTimer();
+                tryPlayAudio();
+            } else {
+                errorMsg.classList.remove('hidden');
+            }
+        }
+
+        // 3. برمجة مشغل الصوت
+        const audio = document.getElementById('love-music');
+        const playBtn = document.getElementById('play-btn');
+        const progress = document.getElementById('music-progress');
+
+        function toggleAudio() {
+            if (audio.paused) {
+                audio.play();
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            } else {
+                audio.pause();
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            }
+        }
+
+        function tryPlayAudio() {
+            audio.play().then(() => {
+                playBtn.innerHTML = '<i class="fas fa-pause"></i>';
+            }).catch(() => {
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+            });
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const percentage = (audio.currentTime / audio.duration) * 100;
+            progress.style.width = percentage + '%';
+        });
+
+        // 4. برمجة العداد
+        const startDate = new Date(2026, 1, 18);
+
+        function startLoveTimer() {
+            setInterval(() => {
+                const now = new Date();
+                const diff = now - startDate;
+
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                document.getElementById('days').innerText = Math.max(0, days);
+                document.getElementById('hours').innerText = Math.max(0, hours);
+                document.getElementById('minutes').innerText = Math.max(0, minutes);
+                document.getElementById('seconds').innerText = Math.max(0, seconds);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
